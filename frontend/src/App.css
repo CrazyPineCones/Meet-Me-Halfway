@@ -1,0 +1,495 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #f7f7f7;
+  color: #171717;
+  min-height: 100vh;
+}
+
+/* Form controls inherit the page font */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+/* Main application content */
+.app {
+  position: relative;
+  z-index: 1;
+  width: min(1000px, 76vw);
+  margin: 65px auto;
+}
+
+/* Left and right map margins */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 12vw;
+  max-width: 230px;
+  min-width: 90px;
+  background-image: url("/nc-interstate-map.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.35;
+  filter: grayscale(100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+body::before {
+  left: 0;
+}
+
+body::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* Header */
+.app-header {
+  margin-bottom: 55px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.title-row h1 {
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: 750;
+  letter-spacing: -1.5px;
+}
+
+.title-row svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.app-header p {
+  color: #777;
+  font-size: 1.05rem;
+  margin-top: 18px;
+}
+
+.app > p {
+  color: #777;
+  font-size: 1.05rem;
+  margin-bottom: 48px;
+}
+
+.locations h2 {
+  font-size: 1.4rem;
+  font-weight: 650;
+  margin-bottom: 24px;
+}
+
+/* Cards */
+.location-card {
+  background: #fff;
+  border: 1px solid #ededed;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.location-card h3 {
+  margin: 0 0 20px;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+/* Inputs */
+.location-card input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  background: #fff;
+  color: #171717;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.location-card input:focus {
+  border-color: #777;
+}
+
+.location-card input::placeholder {
+  color: #aaa;
+}
+
+.name-input {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.location-input-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.location-input-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Transport buttons */
+.transport-options {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.transport-options button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  min-width: 0;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  background: #fff;
+  color: #171717;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.transport-options button.selected {
+  background: #171717;
+  border-color: #171717;
+  color: #fff;
+}
+
+.transport-options button:hover:not(.selected):not(:disabled) {
+  background: #f3f3f3;
+}
+
+.transport-options button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Person cards */
+.person-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.person-heading h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.remove-person {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #777;
+  cursor: pointer;
+}
+
+.remove-person:hover {
+  background: #f0f0f0;
+  color: #171717;
+}
+
+/* Add another person */
+.add-person-container {
+  margin: 4px 0 22px;
+}
+
+.add-person-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  min-height: 42px;
+  padding: 0 16px;
+  margin: 0;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  background: #fff;
+  color: #171717;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.add-person-button:hover {
+  background: #f1f1f1;
+  border-color: #aaa;
+}
+
+/* Ranking preference */
+.ranking-section {
+  margin-top: 32px;
+}
+
+.ranking-section h2 {
+  margin-bottom: 6px;
+}
+
+.ranking-section p {
+  margin-bottom: 16px;
+  color: #777;
+  font-size: 14px;
+}
+
+.ranking-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ranking-options button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 10px;
+  border: 1px solid #dedede;
+  border-radius: 11px;
+  background: #fff;
+  color: #171717;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.ranking-options button.selected {
+  background: #171717;
+  border-color: #171717;
+  color: #fff;
+}
+
+.ranking-options button:not(.selected):hover {
+  background: #f1f1f1;
+}
+
+/* Meet Me Halfway */
+.meet-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 62px;
+  margin: 0;
+  padding: 12px 20px;
+  border: 1px solid #dedede;
+  border-radius: 12px;
+  background: #fff;
+  color: #171717;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.meet-button:hover {
+  background: #171717;
+  color: #fff;
+  border-color: #171717;
+}
+
+/* Smaller screens */
+@media (max-width: 700px) {
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .app {
+    width: 92%;
+    margin: 40px auto;
+  }
+}
+
+
+/* Smaller screens */
+
+@media (max-width: 700px) {
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .app {
+    width: 92%;
+    margin: 40px auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .location-input-row {
+    flex-wrap: wrap;
+  }
+
+  .location-input-row input {
+    flex-basis: 100%;
+  }
+
+  .theater-card {
+    padding: 17px;
+  }
+
+  .theater-stats strong {
+    font-size: 18px;
+  }
+}
+
+/* Results section */
+
+.results-section {
+  margin-top: 48px;
+  padding-bottom: 40px;
+}
+
+.results-section > h2 {
+  font-size: 25px;
+  margin-bottom: 6px;
+}
+
+.results-subtitle {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+.theater-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.theater-card {
+  background: #fff;
+  border: 1px solid #ededed;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.theater-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.theater-heading h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.theater-rank {
+  color: #777;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.theater-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.theater-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-label {
+  color: #888;
+  font-size: 12px;
+}
+
+.theater-stats strong {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.individual-times {
+  padding-top: 16px;
+}
+
+.individual-times h4 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.person-travel-time {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 14px;
+}
+
+.person-travel-time span {
+  color: #666;
+}
+
+.results-loading,
+.no-results {
+  text-align: center;
+  padding: 36px 20px;
+  border: 1px solid #ededed;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.results-loading h2,
+.no-results h2 {
+  margin: 12px 0 6px;
+}
+
+.results-loading p,
+.no-results p {
+  color: #777;
+  font-size: 14px;
+}
+
+.error-message {
+  color: #c0392b;
+  font-size: 14px;
+}
+
